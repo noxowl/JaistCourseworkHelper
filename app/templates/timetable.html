@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <table border="1">
+        <tr>
+            <th>term/day</th>
+        {% for day in weekdays %}
+            <th style="width: 50px">{{ day }}</th>
+        {% endfor %}
+        </tr>
+    {% for key, value in current_timetable.items() %}
+        <tr>
+            <th rowspan="6" style="height: 150px">{{ key }}</th>
+            {% for subject_data in value %}
+                <tr>
+                {% for subject in subject_data %}
+                    <td style="height: 30px">{{ subject }}</td>
+                {% endfor %}
+                </tr>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+    </table>
+    <ul>
+        {% for subj in subjects_available %}
+        <li><a href="{{ url_for('get_timetable', subject=subj.id) }}">{{ subj.subject_code }} {{ subj.title }} | {{ subj.term }} | {{ subj.period }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}
